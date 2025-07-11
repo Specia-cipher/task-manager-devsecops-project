@@ -1,0 +1,14 @@
+
+> task-manager-app@1.0.0 dev
+> nodemon server.js
+
+[33m[nodemon] 3.1.10[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.1.0] injecting env (3) from .env (tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild)
+🚀 Server running at http://0.0.0.0:3000
+Access your app from Windows via: http://YOUR_WSL2_IP:3000
+(Replace YOUR_WSL2_IP with the IP from 'wsl hostname -I' in PowerShell)
+✅ Connected to MongoDB
