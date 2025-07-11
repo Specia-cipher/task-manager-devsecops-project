@@ -44,7 +44,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner | lower }}/task-manager-app:latest # <--- CHANGED THIS LINE
+          tags: ghcr.io/${{ github.repository_owner | lower }}/task-manager-app:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -53,7 +53,7 @@ jobs:
       - name: Run Trivy vulnerability scan
         uses: aquasecurity/trivy-action@master # Use the official Trivy action
         with:
-          image-ref: 'ghcr.io/${{ github.repository_owner | lower }}/task-manager-app:latest' # <--- ALSO CHANGED THIS LINE
+          image-ref: 'ghcr.io/${{ github.repository_owner | lower }}/task-manager-app:latest'
           format: 'table' # Output format (table, json, sarif)
           output: 'trivy-results.txt' # Save results to a file
           severity: 'CRITICAL,HIGH' # Only report Critical and High severity vulnerabilities
