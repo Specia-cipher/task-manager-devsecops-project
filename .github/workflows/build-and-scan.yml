@@ -20,6 +20,10 @@ jobs:
       contents: read # Allow read access to the repository
       packages: write # Allow write access to GitHub Packages (for GHCR)
 
+    env: # Define environment variables for the job
+      GHCR_OWNER_LOWER: ${{ github.repository_owner | lower }} # Convert owner to lowercase once
+      IMAGE_NAME: task-manager-app # Define image name
+
     steps:
       # Step 1: Checkout the repository code
       - name: Checkout repository
@@ -38,13 +42,14 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # Step 4: Build and Push Docker Image
-      # The image name will be ghcr.io/Specia-cipher/task-manager-app
+      # The image name will be ghcr.io/specia-cipher/task-manager-app
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner | lower }}/task-manager-app:latest
+          # Use the defined environment variables for the tag
+          tags: ghcr.io/${{ env.GHCR_OWNER_LOWER }}/${{ env.IMAGE_NAME }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -53,7 +58,8 @@ jobs:
       - name: Run Trivy vulnerability scan
         uses: aquasecurity/trivy-action@master # Use the official Trivy action
         with:
-          image-ref: 'ghcr.io/${{ github.repository_owner | lower }}/task-manager-app:latest'
+          # Use the defined environment variables for image-ref
+          image-ref: 'ghcr.io/${{ env.GHCR_OWNER_LOWER }}/${{ env.IMAGE_NAME }}:latest'
           format: 'table' # Output format (table, json, sarif)
           output: 'trivy-results.txt' # Save results to a file
           severity: 'CRITICAL,HIGH' # Only report Critical and High severity vulnerabilities
